@@ -2,16 +2,16 @@ Package: shortr
 Title: Optimal subset identification in undirected weighted network models
 Version: 1.0.0
 Authors@R: 
-    person("Loïs", "Fournier", "lois.fournier@unil.ch", role = c("aut", "cre"))
+    person(given = "Loïs", family = "Fournier", email = "lois.fournier@unil.ch", role = c("aut", "cre"))
 Description: Identify the optimal subset such that the sum of the (absolute) values of the edge weights connecting the optimal subset with its complement is maximized
 Depends: 
     R (>= 4.1.0)
 Imports: 
     stats,
     utils
-License: GPL (>= 3)
+License: GPL-3
 Encoding: UTF-8
-Roxygen: base::list(markdown = TRUE)
+Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 BugReports: https://github.com/lfourni2/shortr/issues
 URL: https://github.com/lfourni2/shortr
