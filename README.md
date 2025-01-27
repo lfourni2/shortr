@@ -1,4 +1,10 @@
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
 # *shortr*: optimal subset identification in undirected weighted network models
+
+<!-- badges: start -->
+<!-- badges: end -->
 
 In psychometrics, the network approach refers to a set of methods
 employed to model and analyze the relationships among psychological
