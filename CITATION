@@ -1,0 +1,7 @@
+@Manual{,
+  title    = {shortr: optimal subset identification in undirected weighted network models},
+  author   = {Loïs Fournier},
+  year     = {2025},
+  note     = {R package version 1.0.0},
+  url      = {https://github.com/lfourni2/shortr},
+}
