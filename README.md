@@ -1,4 +1,4 @@
-# shortr: optimal subset identification in undirected weighted network models
+# *shortr*: optimal subset identification in undirected weighted network models
 
 In psychometrics, the network approach refers to a set of methods
 employed to model and analyze the relationships among psychological
@@ -54,20 +54,20 @@ assess the “broadest” proportion of the construct-level content of the
 set of items included in the original version of the said psychometric
 instrument.
 
-The goal of shortr is to identify the optimal subset such that the sum
+The goal of *shortr* is to identify the optimal subset such that the sum
 of the (absolute) values of the edge weights connecting the optimal
 subset with its complement is maximized.
 
 ## Installation
 
-You can install the development version of shortr from
+You can install the development version of *shortr* from
 [GitHub](https://github.com/) with:
 
 ``` r
 
-# utils::install.packages("devtools")
+##### utils::install.packages("devtools")
 
-# base::library("devtools")
+##### base::library("devtools")
 
 devtools::install_github("lfourni2/shortr")
 
