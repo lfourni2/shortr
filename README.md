@@ -65,9 +65,9 @@ You can install the development version of *shortr* from
 
 ``` r
 
-##### utils::install.packages("devtools")
+utils::install.packages("remotes")
 
-##### base::library("devtools")
+base::library("remotes")
 
 remotes::install_github("lfourni2/shortr")
 
