@@ -61,7 +61,7 @@ subset with its complement is maximized.
 ## Installation
 
 You can install the development version of *shortr* from
-[GitHub]([https://github.com/](https://github.com/lfourni2/shortr)) with:
+[GitHub](https://github.com/lfourni2/shortr) with:
 
 ``` r
 
