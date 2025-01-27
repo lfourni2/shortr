@@ -2,7 +2,7 @@ Package: shortr
 Title: Optimal subset identification in undirected weighted network models
 Version: 1.0.0
 Authors@R: 
-    person("Fournier", "Loïs", "lois.fournier@unil.ch", role = base::c("aut", "cre"), comment = base::c(ORCID = "0000-0001-6743-6456"))
+    person("Loïs", "Fournier", "lois.fournier@unil.ch", role = base::c("aut", "cre"))
 Description: Identify the optimal subset such that the sum of the (absolute) values of the edge weights connecting the optimal subset with its complement is maximized
 Depends: 
     R (>= 4.1.0)
