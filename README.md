@@ -69,7 +69,7 @@ You can install the development version of *shortr* from
 
 ##### base::library("devtools")
 
-devtools::install_github("lfourni2/shortr")
+remotes::install_github("lfourni2/shortr")
 
 base::library("shortr")
 
