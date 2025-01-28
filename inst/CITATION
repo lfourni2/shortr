@@ -1,7 +1,22 @@
-@Manual{,
-  title    = {shortr: optimal subset identification in undirected weighted network models},
-  author   = {Loïs Fournier},
-  year     = {2025},
-  note     = {R package version 1.0.0},
-  url      = {https://github.com/lfourni2/shortr},
-}
+citHeader("package 'shortr'")
+
+bib <- bibentry(
+  bibtype = "Manual",
+  title = "shortr: optimal subset identification in undirected weighted network models",
+  author = c(person(given = "Loïs", family = "Fournier"), person(given = "Alexandre", family = "Heeren"), person(given = "Stéphanie", family = "Baggio"), person(given = "Luke", family = "Clark"), person(given = "Antonio", family = "Verdejo-García"), person(given = "José C.", family = "Perales"), person(given = "Joël", family = "Billieux")),
+  year = "2025",
+  note = "R package version 1.0.0",
+  url = "https://github.com/lfourni2/shortr"
+)
+
+citFooter()
+
+bib
+
+##### @Manual{shortr,
+#####   title = {shortr: optimal subset identification in undirected weighted network models},
+#####   author = {Loïs Fournier and Alexandre Heeren and Stéphanie Baggio and Luke Clark and Antonio Verdejo-García and José C. Perales and Joël Billieux},
+#####   year = {2025},
+#####   note = {R package version 1.0.0},
+#####   url = {https://github.com/lfourni2/shortr},
+# }
