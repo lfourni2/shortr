@@ -1,3 +1,84 @@
+# R/shortr.R
+
+#' @title
+#' Optimal subset identification in undirected weighted network models
+#'
+#' @description
+#' Identify the optimal subset such that the sum of the (absolute) values of the edge weights connecting the optimal subset with its complement is maximized.
+#'
+#' @param adj.mat
+#' The adjacency matrix. Must be a symmetric adjacency matrix.
+#' 
+#' @param k
+#' The size of the subset. Must be a non-null positive integer.
+#' 
+#' @param method
+#' The combinatorial search algorithm. Must match either `"brute.force"` or `"simulated.annealing"`. Default is `"brute.force"`.
+#' 
+#' @param absolute
+#' Whether absolute values of adj.mat, the symmetric adjacency matrix, should be computed. Must match either `FALSE` or `TRUE`. Default is `TRUE`.
+#' 
+#' @param start.temp
+#' The starting temperature in the simulated annealing search. Must be a non-null positive numeric lying within the interval (0, 1], and must be greater than stop.temp, the stopping temperature. Default is `1`.
+#' 
+#' @param cool.fact
+#' The cooling factor in the simulated annealing search. Must be a non-null positive numeric lying within the interval (0, 1). Default is `0.999`.
+#' 
+#' @param stop.temp
+#' The stopping temperature in the simulated annealing search. Must be a non-null positive numeric lying within the interval (0, 1), and must be less than start.temp, the starting temperature. Default is `0.001`.
+#' 
+#' @param max.iter
+#' The maximal number of iterations in the simulated annealing search. Must be a non-null positive integer. Default is `1000`.
+#' 
+#' @param n.runs
+#' The number of runs in the simulated annealing search. Must be a non-null positive integer. Default is `1000`.
+#' 
+#' @param seed
+#' The optional random number generator state for random number generation in the simulated annealing search. Must be a non-null positive integer. Optional. Default is `5107`.
+#'
+#' @return
+#' A list of two named objects:
+#' \describe{
+#'  \item{\strong{optimal.S}}{A character vector denoting the optimal subset \eqn{S} of size \eqn{k}.}
+#'  \item{\strong{optimal.function.S}}{A numeric value denoting the sum of the (absolute) values of the edge weights connecting the optimal subset \eqn{S} of size \eqn{k} with its complement \eqn{\bar{S}} of size \eqn{n - k}.}
+#' }
+#'
+#' @details
+#' In psychometrics, the network approach refers to a set of methods employed to model and analyze the relationships among psychological variables. Unlike traditional psychometric approaches, such as the structural equation approach focusing on latent variables, the network approach emphasizes the interconnections among observed variables. Due to the latter emphasis, modeling and analyzing network models to complement structural equation models when developing and evaluating psychometric instruments offers several advantages. Most notably, in undirected weighted network models, a subtype of network models, observed variables are represented by nodes, and associations between observed variables, each assigned a weight that represents the magnitude of associations, are represented by edges. In this perspective, undirected weighted network models provide estimates of the magnitude of associations (i.e., the shared variance) among items of psychometric instruments that structural equation models cannot, providing critical insight into the construct-level content validity of subsets of items of psychometric instruments. To illustrate, if an undirected weighted network model suggests that a subset of items of a psychometric instrument presents a high magnitude of associations with another subset of items, the shared variance of the said subsets of items is therefore high: the content they assess and the information they provide is highly similar. From the standpoint of the latter illustration, undirected weighted network modeling allows for the estimation of whether a subset of items assesses a “narrow” or a “broad” proportion of the construct-level content of a psychometric instrument. Hence, identifying an optimal subset of a desired number of items that assesses the “broadest” proportion of the construct-level content of a psychometric instrument consists of a combinatorial optimization problem.\cr\cr
+#' Consider an undirected weighted network model \eqn{G = (V, E)}, where \eqn{V} denotes the set of nodes, and \eqn{E} denotes the set of edges. Each edge \eqn{e_{ij}} is associated with a positive or negative weight \eqn{w_{ij}}. Let \eqn{S} be a subset of nodes from \eqn{V} with a fixed size \eqn{k}, and \eqn{\bar{S}} denote the complement of \eqn{S} in \eqn{V}. The objective is to identify the optimal subset \eqn{S} of size \eqn{k} such that the sum of the (absolute) values of the edge weights connecting \eqn{S} with its complement \eqn{\bar{S}} of size \eqn{n - k} is maximized. Formally, the combinatorial optimization problem can be expressed as:\cr\cr
+#' \deqn{\max_{S \subset V, |S| = k} \left( \sum_{i \in S, j \in \bar{S}} |w_{ij}| \right)}\cr
+#' Solving the combinatorial optimization problem allows identifying what optimal subset of a desired number of items presents the highest magnitude of associations (i.e., the highest shared variance) within the set of items. In this light, combinatorial search algorithms (e.g., brute force search algorithm, simulated annealing search algorithm) allow to identify what optimal subset of a desired number of items should be retained in a short version of a psychometric instrument to assess the “broadest” proportion of the construct-level content of the set of items included in the original version of the said psychometric instrument.
+#'
+#' @examples
+#' adj.mat <- (
+#'   stats::runif(n = 25^2, min = -1, max = 1) |>
+#'   base::matrix(nrow = 25, ncol = 25) |>
+#'   (\(m) (m + base::t(m)) / 2)() |>
+#'   (\(m) {base::diag(m) <- 0; m})()
+#' )
+#' 
+#' shortr::shortr(
+#'   adj.mat = adj.mat,
+#'   k = 5,
+#'   method = base::c("brute.force"),
+#'   absolute = TRUE
+#' )
+#'
+#' @encoding
+#' UTF-8
+#'
+#' @importFrom
+#' stats
+#' runif
+#' 
+#' @importFrom
+#' utils
+#' combn
+#' setTxtProgressBar
+#' txtProgressBar
+#'
+#' @export
+
 shortr <- function(adj.mat, k, method = base::c("brute.force", "simulated.annealing"), absolute = TRUE, start.temp = 1, cool.fact = 0.999, stop.temp = 0.001, max.iter = 1000, n.runs = 1000, seed = 5107) {
 
   ##### adj.mat, the adjacency matrix, must be a symmetric adjacency matrix
@@ -116,10 +197,7 @@ shortr <- function(adj.mat, k, method = base::c("brute.force", "simulated.anneal
 
   }
 
-  ##### consider an undirected weighted network model G = (V, E), where V denotes the set of nodes, and E denotes the set of edges
-  ##### each edge eij is associated with a positive or negative weight wij
-  ##### let S be a subset of nodes from V with a fixed size k, and S- denote the complement of S in V
-  ##### function.S returns the sum of the (absolute) values of the edge weights connecting S with its complement S- of size n-k
+  ##### sum of the (absolute) values of the edge weights connecting a subset with its complement
 
   if (base::isFALSE(absolute)) {
 
@@ -150,17 +228,21 @@ shortr <- function(adj.mat, k, method = base::c("brute.force", "simulated.anneal
       if (k == 0) {
 
         base::cat(base::sprintf("\nWhy would you set k, the size of the subset, to zero?\n"))
+        
         return(base::invisible(base::list(optimal.S = base::character(0), optimal.function.S = 0)))
 
       } else if (k == base::nrow(adj.mat)) {
 
         base::cat(base::sprintf("\nWhy would you set k, the size of the subset, to n, the size of the set?\n"))
+        
         return(base::invisible(base::list(optimal.S = base::colnames(adj.mat), optimal.function.S = function.S(base::seq_len(base::nrow(adj.mat))))))
 
       } else {
 
         base::cat(base::sprintf("\nExamining the only candidate subset...\n\n"))
+        
         best.function.S <- function.S(base::seq_len(k))
+        
         return(base::invisible(base::list(optimal.S = base::colnames(adj.mat)[base::seq_len(k)], optimal.function.S = best.function.S)))
 
       }
@@ -168,6 +250,7 @@ shortr <- function(adj.mat, k, method = base::c("brute.force", "simulated.anneal
     }
 
     best.function.S <- -Inf
+    
     best.S <- NULL
 
     base::cat(base::sprintf("\nExamining all %.0f subsets...\n\n", binomial.coefficient))
@@ -181,11 +264,13 @@ shortr <- function(adj.mat, k, method = base::c("brute.force", "simulated.anneal
       utils::setTxtProgressBar(progress.bar, i)
 
       candidate.S.i <- candidate.S[, i]
+      
       candidate.function.S.i <- function.S(candidate.S.i)
 
       if (candidate.function.S.i > best.function.S) {
 
         best.function.S <- candidate.function.S.i
+        
         best.S <- candidate.S.i
 
       }
@@ -193,13 +278,17 @@ shortr <- function(adj.mat, k, method = base::c("brute.force", "simulated.anneal
     }
 
     utils::setTxtProgressBar(progress.bar, binomial.coefficient)
+    
     base::close(progress.bar)
 
     best.S <- base::sort(best.S)
 
     base::cat("\nNumber of candidate subsets of nodes S from V with a fixed size k examined:", binomial.coefficient, "\n")
+    
     base::cat("\nOptimal subset identified!\n")
+    
     base::cat("\nOptimal subset:", base::paste(base::colnames(adj.mat)[best.S], collapse = " -- "), "\n")
+    
     base::cat("\nOptimal value:", base::round(best.function.S, 3), "\n\n")
 
     return(base::invisible(base::list(optimal.S = base::colnames(adj.mat)[best.S], optimal.function.S = best.function.S)))
@@ -215,17 +304,21 @@ shortr <- function(adj.mat, k, method = base::c("brute.force", "simulated.anneal
       if (k == 0) {
 
         base::cat(base::sprintf("\nWhy would you set k, the size of the subset, to zero?\n"))
+        
         return(base::invisible(base::list(optimal.S = base::character(0), optimal.function.S = 0)))
 
       } else if (k == base::nrow(adj.mat)) {
 
         base::cat(base::sprintf("\nWhy would you set k, the size of the subset, to n, the size of the set?\n"))
+        
         return(base::invisible(base::list(optimal.S = base::colnames(adj.mat), optimal.function.S = function.S(base::seq_len(base::nrow(adj.mat))))))
 
       } else {
 
         base::cat(base::sprintf("\nExamining the only candidate subset...\n\n"))
+        
         best.function.S <- function.S(base::seq_len(k))
+        
         return(base::invisible(base::list(optimal.S = base::colnames(adj.mat)[base::seq_len(k)], optimal.function.S = best.function.S)))
 
       }
@@ -233,7 +326,9 @@ shortr <- function(adj.mat, k, method = base::c("brute.force", "simulated.anneal
     }
 
     best.function.S <- -Inf
+    
     best.S <- NULL
+    
     iteration.i <- 0
 
     candidate.i <- base::new.env(hash = TRUE, parent = base::emptyenv())
@@ -245,9 +340,11 @@ shortr <- function(adj.mat, k, method = base::c("brute.force", "simulated.anneal
     for (run.i in base::seq_len(n.runs)) {
 
       candidate.S.i <- base::sample.int(base::nrow(adj.mat), k)
+      
       candidate.function.S.i <- function.S(candidate.S.i)
 
       best.S.run.i <- candidate.S.i
+      
       best.function.S.run.i <- candidate.function.S.i
 
       temp.i <- start.temp
@@ -259,7 +356,9 @@ shortr <- function(adj.mat, k, method = base::c("brute.force", "simulated.anneal
           break
 
         candidate.S.j <- candidate.S.i
+        
         candidate.S.j[base::sample.int(k, 1)] <- base::sample(base::setdiff(base::seq_len(base::nrow(adj.mat)), candidate.S.i), 1)
+        
         candidate.function.S.j <- function.S(candidate.S.j)
 
         candidate.j <- base::paste(base::sort(candidate.S.j), collapse = "-")
@@ -273,11 +372,13 @@ shortr <- function(adj.mat, k, method = base::c("brute.force", "simulated.anneal
         if (candidate.function.S.j > candidate.function.S.i || stats::runif(1) < base::exp((candidate.function.S.j - candidate.function.S.i) / temp.i)) {
 
           candidate.S.i <- candidate.S.j
+          
           candidate.function.S.i <- candidate.function.S.j
 
           if (candidate.function.S.j > best.function.S.run.i) {
 
             best.function.S.run.i <- candidate.function.S.j
+            
             best.S.run.i <- candidate.S.j
 
           }
@@ -285,7 +386,9 @@ shortr <- function(adj.mat, k, method = base::c("brute.force", "simulated.anneal
         }
 
         temp.i <- temp.i * cool.fact
+        
         iteration.i <- iteration.i + 1
+        
         utils::setTxtProgressBar(progress.bar, iteration.i)
 
       }
@@ -293,6 +396,7 @@ shortr <- function(adj.mat, k, method = base::c("brute.force", "simulated.anneal
       if (best.function.S.run.i > best.function.S) {
 
         best.function.S <- best.function.S.run.i
+        
         best.S <- best.S.run.i
 
       }
@@ -300,6 +404,7 @@ shortr <- function(adj.mat, k, method = base::c("brute.force", "simulated.anneal
     }
 
     utils::setTxtProgressBar(progress.bar, n.runs * base::min(base::ceiling(base::log(stop.temp / start.temp) / base::log(cool.fact)), max.iter))
+    
     base::close(progress.bar)
 
     best.S <- base::sort(best.S)
@@ -307,8 +412,11 @@ shortr <- function(adj.mat, k, method = base::c("brute.force", "simulated.anneal
     candidate.k <- base::length(base::ls(candidate.i))
 
     base::cat("\nNumber of candidate subsets of nodes S from V with a fixed size k examined:", candidate.k, "\n")
+    
     base::cat("\nOptimal subset identified!\n")
+    
     base::cat("\nOptimal subset:", base::paste(base::colnames(adj.mat)[best.S], collapse = " -- "), "\n")
+    
     base::cat("\nOptimal value:", base::round(best.function.S, 3), "\n\n")
 
     return(base::invisible(base::list(optimal.S = base::colnames(adj.mat)[best.S], optimal.function.S = best.function.S)))
