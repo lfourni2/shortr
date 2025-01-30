@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# *shortr*: optimal subset identification in undirected weighted network models
+# *shortr*: Optimal Subset Identification in Undirected Weighted Network Models
 
 <!-- badges: start -->
 <!-- badges: end -->
@@ -59,10 +59,6 @@ should be retained in a short version of a psychometric instrument to
 assess the “broadest” proportion of the construct-level content of the
 set of items included in the original version of the said psychometric
 instrument.
-
-The goal of *shortr* is to identify the optimal subset such that the sum
-of the (absolute) values of the edge weights connecting the optimal
-subset with its complement is maximized.
 
 ## Installation
 
