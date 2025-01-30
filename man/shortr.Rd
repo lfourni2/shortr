@@ -15,7 +15,8 @@ shortr(
   stop.temp = 0.001,
   max.iter = 1000,
   n.runs = 1000,
-  seed = 5107
+  seed = 5107,
+  verbose = TRUE
 )
 }
 \arguments{
@@ -38,6 +39,8 @@ shortr(
 \item{n.runs}{The number of runs in the simulated annealing search. Must be a non-null positive integer. Default is \code{1000}.}
 
 \item{seed}{The optional random number generator state for random number generation in the simulated annealing search. Must be a non-null positive integer. Optional. Default is \code{5107}.}
+
+\item{verbose}{Whether information messages should be printed to the console. Must match either \code{FALSE} or \code{TRUE}. Default is \code{TRUE}.}
 }
 \value{
 A list of two named objects:
