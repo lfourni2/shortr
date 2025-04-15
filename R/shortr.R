@@ -1,5 +1,5 @@
 #' @title
-#' Optimal subset identification in undirected weighted network models
+#' Optimal Subset Identification in Undirected Weighted Network Models
 #'
 #' @description
 #' Identify the optimal subset such that the sum of the (absolute) values of the edge weights connecting the optimal subset with its complement is maximized.
@@ -64,6 +64,9 @@
 #'   method = base::c("brute.force"),
 #'   absolute = TRUE
 #' )
+#'
+#' @references
+#' Fournier, L., Heeren, A., Baggio, S., Clark, L., Verdejo-García, A., Perales, J. C., & Billieux, J. (2025). *shortr: Optimal Subset Identification in Undirected Weighted Network Models* (Version 1.0.1) \[Computer software\]. \doi{doi:10.32614/CRAN.package.shortr}
 #'
 #' @encoding
 #' UTF-8
