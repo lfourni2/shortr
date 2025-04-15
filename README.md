@@ -62,16 +62,9 @@ instrument.
 
 ## Installation
 
-You can install the development version of *shortr* from
-[GitHub](https://github.com/lfourni2/shortr) with:
-
 ``` r
 
-utils::install.packages("remotes")
-
-base::library("remotes")
-
-remotes::install_github("lfourni2/shortr")
+utils::install.packages("shortr")
 
 base::library("shortr")
 
