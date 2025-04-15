@@ -3,7 +3,7 @@
 \encoding{UTF-8}
 \name{shortr}
 \alias{shortr}
-\title{Optimal subset identification in undirected weighted network models}
+\title{Optimal Subset Identification in Undirected Weighted Network Models}
 \usage{
 shortr(
   adj.mat,
@@ -73,4 +73,7 @@ shortr::shortr(
   absolute = TRUE
 )
 
+}
+\references{
+Fournier, L., Heeren, A., Baggio, S., Clark, L., Verdejo-García, A., Perales, J. C., & Billieux, J. (2025). \emph{shortr: Optimal Subset Identification in Undirected Weighted Network Models} (Version 1.0.1) [Computer software]. \doi{doi:10.32614/CRAN.package.shortr}
 }
