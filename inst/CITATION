@@ -1,22 +1,25 @@
-citHeader("package 'shortr'")
+citHeader("To cite package ‘shortr’ in publications use:")
 
-bib <- bibentry(
+bibentry(
   bibtype = "Manual",
   title = "shortr: Optimal Subset Identification in Undirected Weighted Network Models",
-  author = c(person(given = "Loïs", family = "Fournier"), person(given = "Alexandre", family = "Heeren"), person(given = "Stéphanie", family = "Baggio"), person(given = "Luke", family = "Clark"), person(given = "Antonio", family = "Verdejo-García"), person(given = "José C.", family = "Perales"), person(given = "Joël", family = "Billieux")),
+  author = c(
+    person(given = "Loïs", family = "Fournier", email = "lois.fournier@unil.ch", 
+           role = c("aut", "cre"), comment = c(ORCID = "0000-0001-6743-6456")),
+    person(given = "Alexandre", family = "Heeren", email = "alexandre.heeren@uclouvain.be", 
+           role = "aut", comment = c(ORCID = "0000-0003-0553-6149")),
+    person(given = "Stéphanie", family = "Baggio", email = "stephanie.baggio@unibe.ch", 
+           role = "aut", comment = c(ORCID = "0000-0002-5347-5937")),
+    person(given = "Luke", family = "Clark", email = "luke.clark@psych.ubc.ca", 
+           role = "aut", comment = c(ORCID = "0000-0003-1103-2422")),
+    person(given = "Antonio", family = "Verdejo-García", email = "antonio.verdejo@monash.edu", 
+           role = "aut", comment = c(ORCID = "0000-0001-8874-9339")),
+    person(given = c("José", "C."), family = "Perales", email = "jcesar@ugr.es", 
+           role = "aut", comment = c(ORCID = "0000-0001-5163-8811")),
+    person(given = "Joël", family = "Billieux", email = "joel.billieux@unil.ch", 
+           role = "aut", comment = c(ORCID = "0000-0002-7388-6194"))
+  ),
   year = "2025",
-  note = "R package version 1.0.0",
-  url = "https://github.com/lfourni2/shortr"
+  note = "R package version 1.0.1",
+  url = "https://doi.org/10.32614/CRAN.package.shortr"
 )
-
-citFooter()
-
-bib
-
-##### @Manual{shortr,
-#####   title = {shortr: Optimal Subset Identification in Undirected Weighted Network Models},
-#####   author = {Loïs Fournier and Alexandre Heeren and Stéphanie Baggio and Luke Clark and Antonio Verdejo-García and José C. Perales and Joël Billieux},
-#####   year = {2025},
-#####   note = {R package version 1.0.0},
-#####   url = {https://github.com/lfourni2/shortr},
-# }
